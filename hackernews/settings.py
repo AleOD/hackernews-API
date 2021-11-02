@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '9nh1ix6wgwv8w)z6a$^_z+e5=9lg$c5ve6=1__nrd*79_1%6b9'
+SECRET_KEY = 't+1=z%c@2wczf7=yzfow0b0k3_%j*2^^qdcad!w0vh$+m-!-xs'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -39,9 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'graphene_django',
     'links',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -49,7 +51,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
 ]
 
 ROOT_URLCONF = 'hackernews.urls'
@@ -79,12 +80,11 @@ WSGI_APPLICATION = 'hackernews.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'ale-hackernews',
+        'NAME': 'aleDB',
         'USER': 'postgres',
-        'PASSWORD': 'adsoft',
-        'HOST': '34.125.7.41',
+        'PASSWORD': 'db_2021',
+        'HOST': '34.125.27.210',
         'PORT': '5432'
-
     }
 }
 
@@ -128,13 +128,16 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 GRAPHENE = {
-	'SCHEMA': 'hackernews.schema.schema',
-	'MIDDLEWARE': [
+    'SCHEMA': 'hackernews.schema.schema',
+    'MIDDLEWARE': [
         'graphql_jwt.middleware.JSONWebTokenMiddleware',
     ],
 }
+
 
 AUTHENTICATION_BACKENDS = [
     'graphql_jwt.backends.JSONWebTokenBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
+
+CORS_ORIGIN_ALLOW_ALL = True
